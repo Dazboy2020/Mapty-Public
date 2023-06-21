@@ -1,8 +1,8 @@
-"use strict";
+'use strict';
 
 class Workout {
 	date = new Date();
-	id = (Date.now() + "").slice(-10);
+	id = (Date.now() + '').slice(-10);
 	clicks = 0;
 	constructor(coords, distance, duration, location, flag) {
 		this.coords = coords; // [lat, lng]
@@ -14,18 +14,18 @@ class Workout {
 
 	_setDescription() {
 		const months = [
-			"January",
-			"February",
-			"March",
-			"April",
-			"May",
-			"June",
-			"July",
-			"August",
-			"September",
-			"October",
-			"November",
-			"December",
+			'January',
+			'February',
+			'March',
+			'April',
+			'May',
+			'June',
+			'July',
+			'August',
+			'September',
+			'October',
+			'November',
+			'December',
 		];
 		this.description = `${this.type[0].toUpperCase()}${this.type.slice(
 			1
@@ -37,7 +37,7 @@ class Workout {
 }
 
 class Running extends Workout {
-	type = "running";
+	type = 'running';
 	constructor(coords, distance, duration, cadence, location, flag) {
 		super(coords, distance, duration, location, flag);
 		this.cadence = cadence;
@@ -53,7 +53,7 @@ class Running extends Workout {
 }
 
 class Cycling extends Workout {
-	type = "cycling";
+	type = 'cycling';
 	constructor(coords, distance, duration, elevation, location, flag) {
 		super(coords, distance, duration, location, flag);
 		this.elevation = elevation;
@@ -70,30 +70,30 @@ class Cycling extends Workout {
 
 // ! APPLICATION ARCHITECTURE ! //
 
-const form = document.querySelector(".form");
-const containerWorkouts = document.querySelector(".workouts");
+const form = document.querySelector('.form');
+const containerWorkouts = document.querySelector('.workouts');
 // types
-const inputType = document.querySelector(".form__input--type");
-const inputDistance = document.querySelector(".form__input--distance");
-const inputDuration = document.querySelector(".form__input--duration");
-const inputCadence = document.querySelector(".form__input--cadence");
-const inputElevation = document.querySelector(".form__input--elevation");
+const inputType = document.querySelector('.form__input--type');
+const inputDistance = document.querySelector('.form__input--distance');
+const inputDuration = document.querySelector('.form__input--duration');
+const inputCadence = document.querySelector('.form__input--cadence');
+const inputElevation = document.querySelector('.form__input--elevation');
 
 //* Edit
-const editbtn = document.querySelector(".edit__btn");
-const editWorkoutForm = document.querySelector(".edit__workout");
-const editForm = document.querySelector(".editForm");
+const editbtn = document.querySelector('.edit__btn');
+const editWorkoutForm = document.querySelector('.edit__workout');
+const editForm = document.querySelector('.editForm');
 // types
-const edit_inputType = document.querySelector(".edit__form__input--type");
+const edit_inputType = document.querySelector('.edit__form__input--type');
 const edit_inputDistance = document.querySelector(
-	".edit__form__input--distance"
+	'.edit__form__input--distance'
 );
 const edit_inputDuration = document.querySelector(
-	".edit__form__input--duration"
+	'.edit__form__input--duration'
 );
-const edit_inputCadence = document.querySelector(".edit__form__input--cadence");
+const edit_inputCadence = document.querySelector('.edit__form__input--cadence');
 const edit_inputElevation = document.querySelector(
-	".edit__form__input--elevation"
+	'.edit__form__input--elevation'
 );
 
 class App {
@@ -115,13 +115,13 @@ class App {
 		this._getLocalStorage();
 
 		//?Event Handlers
-		form.addEventListener("submit", this._newWorkout.bind(this));
-		inputType.addEventListener("change", this._toggleElevationField);
-		containerWorkouts.addEventListener("click", this._moveToPopup.bind(this));
-		containerWorkouts.addEventListener("click", this._editWorkout.bind(this));
-		editForm.addEventListener("submit", this._editWorkoutValues.bind(this));
-		editForm.addEventListener("click", this._deleteEditTab.bind(this));
-		edit_inputType.addEventListener("change", this._editToggleElevationField);
+		form.addEventListener('submit', this._newWorkout.bind(this));
+		inputType.addEventListener('change', this._toggleElevationField);
+		containerWorkouts.addEventListener('click', this._moveToPopup.bind(this));
+		containerWorkouts.addEventListener('click', this._editWorkout.bind(this));
+		editForm.addEventListener('submit', this._editWorkoutValues.bind(this));
+		editForm.addEventListener('click', this._deleteEditTab.bind(this));
+		edit_inputType.addEventListener('change', this._editToggleElevationField);
 	}
 
 	_getPosition() {
@@ -129,16 +129,16 @@ class App {
 			navigator.geolocation.getCurrentPosition(
 				this._loadMap.bind(this),
 				function () {
-					alert("Could not get your position");
+					alert('Could not get your position');
 				}
 			);
 
-		if (this.#workouts.type === "cycling") {
-			document.getElementById("form__border").style.borderColor =
-				"var(--color-brand--1)";
+		if (this.#workouts.type === 'cycling') {
+			document.getElementById('form__border').style.borderColor =
+				'var(--color-brand--1)';
 		} else {
-			document.getElementById("form__border").style.borderColor =
-				"var(--color-brand--2)";
+			document.getElementById('form__border').style.borderColor =
+				'var(--color-brand--2)';
 		}
 	}
 
@@ -146,15 +146,15 @@ class App {
 		const { latitude, longitude } = position.coords;
 		const coords = [latitude, longitude];
 
-		this.#map = L.map("map").setView(coords, this.#mapZoomLevel);
+		this.#map = L.map('map').setView(coords, this.#mapZoomLevel);
 
-		L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
+		L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
 			attribution:
 				'&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
 		}).addTo(this.#map);
 
 		//? Clicks on map functionality
-		this.#map.on("click", this._showForm.bind(this));
+		this.#map.on('click', this._showForm.bind(this));
 
 		this.#workouts.forEach((work) => {
 			this._renderWorkoutMarker(work);
@@ -163,57 +163,57 @@ class App {
 
 	_showForm(mapE) {
 		this.#mapEvent = mapE;
-		editForm.classList.add("hidden");
-		form.classList.remove("hidden");
+		editForm.classList.add('hidden');
+		form.classList.remove('hidden');
 
-		if (inputType.value === "cycling") {
-			document.getElementById("form__border").style.borderColor =
-				"var(--color-brand--1)";
+		if (inputType.value === 'cycling') {
+			document.getElementById('form__border').style.borderColor =
+				'var(--color-brand--1)';
 		} else {
-			document.getElementById("form__border").style.borderColor =
-				"var(--color-brand--2)";
+			document.getElementById('form__border').style.borderColor =
+				'var(--color-brand--2)';
 		}
-		setTimeout(() => (form.style.display = "grid"), 1000);
+		setTimeout(() => (form.style.display = 'grid'), 1000);
 	}
 
 	_hideForm() {
 		//Empty fields
-		form.style.display = "none";
-		form.classList.add("hidden");
-		setTimeout(() => (form.style.display = "grid"), 1000);
+		form.style.display = 'none';
+		form.classList.add('hidden');
+		setTimeout(() => (form.style.display = 'grid'), 1000);
 
 		inputDuration.value =
 			inputDistance.value =
 			inputCadence.value =
 			inputElevation.value =
-				"";
+				'';
 	}
 
 	_editToggleElevationField() {
 		const type = edit_inputType.value;
 
 		edit_inputElevation
-			.closest(".form__row")
-			.classList.toggle("form__row--hidden");
+			.closest('.form__row')
+			.classList.toggle('form__row--hidden');
 		edit_inputCadence
-			.closest(".form__row")
-			.classList.toggle("form__row--hidden");
+			.closest('.form__row')
+			.classList.toggle('form__row--hidden');
 	}
 
 	_toggleElevationField() {
-		inputElevation.closest(".form__row").classList.toggle("form__row--hidden");
-		inputCadence.closest(".form__row").classList.toggle("form__row--hidden");
+		inputElevation.closest('.form__row').classList.toggle('form__row--hidden');
+		inputCadence.closest('.form__row').classList.toggle('form__row--hidden');
 
 		const type = inputType.value;
 
-		if (type === "running") {
-			document.getElementById("form__border").style.borderColor =
-				"var(--color-brand--2)";
+		if (type === 'running') {
+			document.getElementById('form__border').style.borderColor =
+				'var(--color-brand--2)';
 		}
 
-		if (type === "cycling") {
-			document.getElementById("form__border").style.borderColor =
-				"var(--color-brand--1)";
+		if (type === 'cycling') {
+			document.getElementById('form__border').style.borderColor =
+				'var(--color-brand--1)';
 		}
 	}
 
@@ -271,14 +271,14 @@ class App {
 				// this.#editLocation.push(location);
 
 				//? if running: create new running object
-				if (type === "running") {
+				if (type === 'running') {
 					const cadence = +inputCadence.value;
 					//* Check if data is valid
 					if (
 						!validInputs(distance, duration, cadence) ||
 						!allPositive(distance, duration, cadence)
 					)
-						return alert("Inputs have to be positive numbers!");
+						return alert('Inputs have to be positive numbers!');
 					workout = new Running(
 						[lat, lng],
 						distance,
@@ -290,14 +290,14 @@ class App {
 				}
 
 				//? if cycling: create cycing object
-				if (type === "cycling") {
+				if (type === 'cycling') {
 					const elevation = +inputElevation.value;
 					//* Check if data is valid
 					if (
 						!validInputs(distance, duration, elevation) ||
 						!allPositive(distance, duration)
 					)
-						return alert("Inputs have to be positive numbers!");
+						return alert('Inputs have to be positive numbers!');
 					workout = new Cycling(
 						[lat, lng],
 						distance,
@@ -342,11 +342,11 @@ class App {
 				})
 			)
 			.setPopupContent(
-				`${workout.type === "running" ? "🏃‍♂️" : "🚴‍♀️"} ${workout.description}`
+				`${workout.type === 'running' ? '🏃‍♂️' : '🚴‍♀️'} ${workout.description}`
 			)
 			.openPopup();
 
-		currentMarker.addEventListener("mouseover", (e) =>
+		currentMarker.addEventListener('mouseover', (e) =>
 			console.log(this.#markers)
 		);
 	}
@@ -359,7 +359,7 @@ class App {
           </h2>
           <div class="workout__details">
             <span class="workout__icon">${
-							workout.type === "running" ? "🏃‍♂️" : "🚴‍♀️"
+							workout.type === 'running' ? '🏃‍♂️' : '🚴‍♀️'
 						}</span>
             <span class="workout__value">${workout.distance}</span>
             <span class="workout__unit">km</span>
@@ -376,7 +376,7 @@ class App {
           <i class="fa-sharp fa-solid fa-pen-to-square fa-2xl"></i>    
           `;
 
-		if (workout.type === "running")
+		if (workout.type === 'running')
 			html += `
         <div class="workout__details">
             <span class="workout__icon">⚡️</span>
@@ -393,7 +393,7 @@ class App {
     </li>
     `;
 
-		if (workout.type === "cycling")
+		if (workout.type === 'cycling')
 			html += `
         <div class="workout__details">
             <span class="workout__icon">⚡️</span>
@@ -410,7 +410,7 @@ class App {
         </li> 
       `;
 
-		form.insertAdjacentHTML("afterend", html);
+		form.insertAdjacentHTML('afterend', html);
 	}
 
 	_deleteWorkout(id) {
@@ -422,20 +422,20 @@ class App {
 			}
 
 			if (this.#workouts < 1) {
-				editForm.classList.add("hidden");
+				editForm.classList.add('hidden');
 			}
 			this._setLocalStorage();
-			setTimeout(() => (form.style.display = "grid"), 1000);
+			setTimeout(() => (form.style.display = 'grid'), 1000);
 		}
 	}
 
 	_deleteEditTab(e) {
-		if (e.target.classList.contains("fa-trash-can")) {
-			editForm.classList.add("hidden");
+		if (e.target.classList.contains('fa-trash-can')) {
+			editForm.classList.add('hidden');
 		}
 	}
 
-	//! Edit Worout Tab //
+	//! Edit Workout Tab //
 	_editWorkoutValues(e) {
 		e.preventDefault();
 
@@ -458,7 +458,7 @@ class App {
 		const distance = +edit_inputDistance.value;
 		const duration = +edit_inputDuration.value;
 		//? if running: create new running object
-		if (type === "running") {
+		if (type === 'running') {
 			Object.setPrototypeOf(workout, Running.prototype);
 
 			const cadence = +edit_inputCadence.value;
@@ -467,7 +467,7 @@ class App {
 				!validInputs(distance, duration, cadence) ||
 				!allPositive(distance, duration, cadence)
 			) {
-				return alert("Inputs have to be positive numbers!");
+				return alert('Inputs have to be positive numbers!');
 			} else {
 				Object.setPrototypeOf(workout, Running.prototype);
 				workout.type = type;
@@ -479,7 +479,7 @@ class App {
 		}
 
 		//? if cycling: create cycing object
-		if (type === "cycling") {
+		if (type === 'cycling') {
 			Object.setPrototypeOf(workout, Cycling.prototype);
 
 			const elevation = +edit_inputElevation.value;
@@ -488,7 +488,7 @@ class App {
 				!validInputs(distance, duration, elevation) ||
 				!allPositive(distance, duration)
 			) {
-				return alert("Inputs have to be positive numbers!");
+				return alert('Inputs have to be positive numbers!');
 			} else {
 				Object.setPrototypeOf(workout, Cycling.prototype);
 
@@ -511,29 +511,29 @@ class App {
 	}
 
 	_editWorkout(e) {
-		const workoutEl = e.target.closest(".workout");
+		const workoutEl = e.target.closest('.workout');
 		if (!workoutEl) return;
 
-		const workout = this.#workouts.find(
-			(work) => work.id === workoutEl.dataset.id
-		);
+		// const workout = this.#workouts.find(
+		// 	(work) => work.id === workoutEl.dataset.id
+		// );
 
-		if (e.target.classList.contains("fa-pen-to-square")) {
-			console.log("EDIT CLICKED");
+		if (e.target.classList.contains('fa-pen-to-square')) {
+			console.log('EDIT CLICKED');
 			//* show/remove forms
 
-			console.log(this.#workouts.length);
-			form.classList.add("hidden");
-			editForm.classList.add("hidden");
+			// console.log(this.#workouts.length);
+			form.classList.add('hidden');
+			editForm.classList.add('hidden');
 
-			editForm.classList.remove("hidden");
-			document.getElementById("editForm__border").style.borderColor = "red";
+			editForm.classList.remove('hidden');
+			document.getElementById('editForm__border').style.borderColor = 'red';
 		}
-		setTimeout(() => (form.style.display = "grid"), 1000);
+		setTimeout(() => (form.style.display = 'grid'), 1000);
 	}
 
 	_moveToPopup(e) {
-		const workoutEl = e.target.closest(".workout");
+		const workoutEl = e.target.closest('.workout');
 		if (!workoutEl) return;
 
 		const workout = this.#workouts.find(
@@ -543,37 +543,37 @@ class App {
 		console.log(workout);
 
 		//* Remove workout
-		if (e.target.classList.contains("fa-trash-can")) {
+		if (e.target.classList.contains('fa-trash-can')) {
 			workoutEl.remove();
 
-			let workoutId = e.target.closest(".workout").dataset.id;
+			let workoutId = e.target.closest('.workout').dataset.id;
 			this._deleteWorkout(workoutId);
 		}
 		console.log(this.#city);
 
 		//* Select correct editing type
-		if (workout.type === "running") {
-			document.getElementById("transport").value = "running";
+		if (workout.type === 'running') {
+			document.getElementById('transport').value = 'running';
 
-			if (workout.type === "running") {
+			if (workout.type === 'running') {
 				edit_inputElevation
-					.closest(".form__row")
-					.classList.add("form__row--hidden");
+					.closest('.form__row')
+					.classList.add('form__row--hidden');
 				edit_inputCadence
-					.closest(".form__row")
-					.classList.remove("form__row--hidden");
+					.closest('.form__row')
+					.classList.remove('form__row--hidden');
 			}
 		} else {
-			if (workout.type === "cycling") {
-				document.getElementById("transport").value = "cycling";
+			if (workout.type === 'cycling') {
+				document.getElementById('transport').value = 'cycling';
 
-				if (workout.type === "cycling") {
+				if (workout.type === 'cycling') {
 					edit_inputElevation
-						.closest(".form__row")
-						.classList.remove("form__row--hidden");
+						.closest('.form__row')
+						.classList.remove('form__row--hidden');
 					edit_inputCadence
-						.closest(".form__row")
-						.classList.add("form__row--hidden");
+						.closest('.form__row')
+						.classList.add('form__row--hidden');
 				}
 			}
 		}
@@ -587,25 +587,26 @@ class App {
 	}
 
 	_setLocalStorage() {
-		localStorage.setItem("workouts", JSON.stringify(this.#workouts));
+		localStorage.setItem('workouts', JSON.stringify(this.#workouts));
 	}
 
 	_getLocalStorage() {
-		const data = JSON.parse(localStorage.getItem("workouts"));
+		const data = JSON.parse(localStorage.getItem('workouts'));
 
 		if (!data) return;
 		//* Loop through array and set either running or cycling prototype
 		this.#workouts = data;
 
 		this.#workouts.forEach((work) => {
-			work.__proto__ =
-				work.type === "running" ? Running.prototype : Cycling.prototype;
+			// console.log(this.#workouts);
+			// work.__proto__ =
+			// 	work.type === 'running' ? Running.prototype : Cycling.prototype;
 			this._renderWorkout(work);
 		});
 	}
 
 	reset() {
-		localStorage.removeItem("workouts");
+		localStorage.removeItem('workouts');
 		location.reload();
 	}
 }
